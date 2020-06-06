@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><record id="academic_year_form_view" model="ir.ui.view">
+        <field name="name">academic.year.form</field>
+        <field name="model">academic.year</field>
+        <field name="arch" type="xml">
+        	<form string="Academic year Details">
+                <header>
+                    <button name="generate_academicmonth" type="object" string="Generate Months"/>
+                </header>
+        		<group>
+            		<group>
+                        <field name="name"/>
+                        <field name="date_start"/>
+                        <field name="sequence"/>
+            		</group>
+            		<group>
+                      	<field name="code"/>
+                      	<field name="date_stop"/>
+                      	<field name="current"/>
+            		</group>
+                </group>
+                 <notebook colspan="4">
+                    <page string="Months">
+                        <field name="month_ids" nolabel="1" colspan="4" 
+                                options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}">
+                            <tree string="Months">
+                                <field name="name" />
+                                <field name="code" />
+                                <field name="date_start" />
+                                <field name="date_stop" />
+                            </tree>
+                            <form string="Months">
+                                <group col="4" colspan="4">
+                                    <field name="name" placeholder="Name" />
+                                    <field name="code" placeholder="Code" />
+                                    <field name="date_start" placeholder="Start Date" />
+                                    <field name="date_stop" placeholder="Stop Date" />
+                                    <field name="description" colspan="4" placeholder="Description"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </notebook>
+                <newline />
+                <separator string="Description" colspan="4" />
+                <field name="description" colspan="4" placeholder="Description"/>
+    	   </form>
+        </field>
+    </record>
+	<record id="academic_year_tree_view" model="ir.ui.view">
+        <field name="name">academic.year.tree</field>
+        <field name="model">academic.year</field>
+        <field name="arch" type="xml">
+            <tree string="Academic year Details">
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="date_start"/>
+                <field name="date_stop"/>            	    
+            </tree>
+        </field>
+    </record>
+
+	<record id="action_academic_year" model="ir.actions.act_window">
+        <field name="name">Academic Year</field>
+        <field name="res_model">academic.year</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="academic_month_form_view" model="ir.ui.view">
+        <field name="name">academic.month.form</field>
+        <field name="model">academic.month</field>
+        <field name="arch" type="xml">
+            <form string="Academic year Details">
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="date_start"/>
+                        <field name="year_id"/>
+                    </group>
+                    <group>
+                        <field name="code"/>
+                        <field name="date_stop"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </group>
+           </form>
+        </field>
+    </record>
+    <record id="academic_month_tree_view" model="ir.ui.view">
+        <field name="name">academic.month.tree</field>
+        <field name="model">academic.month</field>
+        <field name="arch" type="xml">
+            <tree string="Academic year Details">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="date_start"/>
+                <field name="date_stop"/>
+                <field name="year_id"/>                
+            </tree>
+        </field>
+    </record>
+    <record id="action_academic_month" model="ir.actions.act_window">
+        <field name="name">Academic Month</field>
+        <field name="res_model">academic.month</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

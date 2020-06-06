@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <!-- Form View 1 Of Student's Profiles -->
+    <record id="view_student_form_info" model="ir.ui.view">
+        <field name="name">student.student.form.info</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <form string="Student Information" create="false" delete="false">
+                <header>
+                    
+                    <!--<button class="oe_stat_button" name="set_alumni" string="Alumni" type="object" icon="fa-archive"
+                            states="done" groups="group_school_administration"/>
+                    <button class="oe_stat_button" icon="fa-check" name="admission_done" type="object" string="Done"
+                            states="draft" groups="group_school_administration"/> -->
+                    <field name="state" widget="statusbar" statusbar_visible="alumni,terminate"
+                           attrs="{'invisible':[('state','=','done')]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="buttons"></div>
+                    <div class="oe_inline">
+                        <newline/>
+                        <separator string="Personal Information"/>
+                        <b>
+                            <field name="reg_code" readonly="1"/>
+                        </b>
+                        <br/>
+                        <field name="photo" widget="image" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                               class="oe_avatar oe_left" style="max-width:100px;max-height:117px;"/>
+                        <div class="oe_title">
+                            <group>
+                                <field name="name" placeholder="First Name" nolabel="1" required="1"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <br/>
+                                <field name="middle" placeholder="Middle Name" nolabel="1"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <br/>
+                                <field name="last" placeholder="Last Name" nolabel="1" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <br />
+                                <field name="pid" invisible="1"/>
+                            </group>
+                        </div>
+                    </div>
+                    <group>
+                        <group string="Student Information">
+                            <field name="student_code" readonly="1"/>
+                            <field name="roll_no" help="Roll number of Student" readonly="1"/>
+                            <field name="year" placeholder="Year" widget="selection" help="Academic year of Student"
+                                   attrs="{'readonly':['|',('state','in',['alumni','terminate']),('teachr_user_grp','=',True)]}"/>
+                            <field name="school_id" placeholder="School" widget="selection" help="School of Student"
+                                   attrs="{'readonly':['|',('state','in',['alumni','terminate']),('teachr_user_grp','=',True)]}"/>
+                            <!-- <field name="branch"/> -->
+                        </group>
+                        <group string="Standard Information">
+                            <field name="standard_id" placeholder="Class" domain="[('school_id','=',school_id)]"
+                                   widget="selection" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="division_id" placeholder="Section" invisible="1" widget="selection"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="medium_id" placeholder="Medium" widget="selection"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="basic_parent_id" domain="[('id', 'in', parent_id)]"/>
+                            <field name="discount_ids" widget="many2many_tags"/>
+                            <!-- <field name="tax_ids" widget="many2many_tags"/> -->
+                        </group>
+                    </group>
+                    <group invisible="1">
+                        <group>
+                            <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" class="o_address_street" placeholder="Street..."
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="street2" class="o_address_street" placeholder="Street2..."
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="city" placeholder="City" class="o_address_city"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="state_id" domain="[('country_id','=',country_id)]" class="o_address_state"
+                                       placeholder="State" options="{&quot;no_open&quot;: True}"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country,oe_no_button"
+                                       options="{&quot;no_open&quot;: True}"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="phone" placeholder="Phone Number"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="mobile" placeholder="Mobile Number"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="email" placeholder="Email Address" String="Email"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            <field name="website" widget="url" placeholder="e.g. www.serpentcs.com"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                        </group>
+                    </group>
+                            <field name="teachr_user_grp" invisible="1"/>
+                    <notebook>
+
+                        <!--<page string="Applicable Fee">-->
+                        <!--<group string="Applicable Fee">-->
+                        <!--<field name="fee_structure_id" class="oe_inline"/>-->
+                        <!--</group>-->
+                        <!--<field name="line_ids">-->
+                        <!--<tree>-->
+                        <!--<field name="sequence"/>-->
+                        <!--<field name="name"/>-->
+                        <!--<field name="classes"/>-->
+                        <!--<field name="code"/>-->
+                        <!--<field name="type"/>-->
+                        <!--<field name="account_id"/>-->
+                        <!--<field name="discount_ids" widget="many2many_tags"/>-->
+                        <!--<field name="tax_ids" widget="many2many_tags"/>-->
+                        <!--<field name="amount"/>-->
+                        <!--</tree>-->
+                        <!--</field>-->
+                        <!--</page>-->
+                        <page string="General" name="general">
+                            <group>
+                                <group string="Student Info" colspan="4" col="4">
+                                    <group>
+                                        <field name="student_number" class="oe_inline"/>
+                                        <field name="admission_date" class="oe_inline" widget="date"
+                                               placeholder="Admission Date"
+                                               attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                               readonly="1"/>
+                                        <field name="gender" class="oe_inline"
+                                               attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                               placeholder="Gender" required="1"/>
+                                        <field name="student_type" class="oe_inline"/>
+                                        <field name="student_reference_no" class="oe_inline"/>
+                                        <field name="student_first_name" class="oe_inline"/>
+                                        <field name="student_first_name_arabic" class="oe_inline"/>
+                                        <field name="student_father_full_name" class="oe_inline"/>
+                                        <field name="student_father_full_name_arabic" class="oe_inline"/>
+                                        <field name="student_id_number" class="oe_inline"/>
+                                        <field name="student_id_issued_place" class="oe_inline"/>
+                                        <field name="student_id_issued_date" class="oe_inline"/>
+                                        <field name="student_id_expiry_date" class="oe_inline"/>
+                                        <field name="student_passport_no" class="oe_inline"/>
+                                        <field name="student_passport_issued_place" class="oe_inline"/>
+                                        <field name="student_passport_issued_date" class="oe_inline"/>
+                                        <field name="student_passport_expiry_date" class="oe_inline"/>
+                                        <field name="student_name_in_passport_arabic" class="oe_inline"/>
+                                        <field name="student_name_in_passport_english" class="oe_inline"/>
+                                        <field name="student_nationality" class="oe_inline"/>
+                                        <field name="mother_tongue" class="oe_inline"
+                                               attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                               options="{'no_open':True}" placeholder="Mother Tounge"/>
+                                        <field name="student_first_language" class="oe_inline"/>
+                                        <field name="english_knowledge" class="oe_inline"/>
+                                    </group>
+                                    <group>
+                                        <!-- Muhammad Jawaid Iqbal -->
+                                        <!-- remove widget -->
+                                        <field name="cast_id" class="oe_inline"
+                                               attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                               options="{'no_open':True}" placeholder="Religion/Caste"/>
+                                        <field name="date_of_birth" class="oe_inline" widget="date"
+                                               placeholder="Birthdate"
+                                               attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                        <field name="student_birth_place" class="oe_inline"/>
+                                        <field name="age" class="oe_inline"/>
+                                        <field name="father_education_level" class="oe_inline"/>
+                                        <field name="mother_education_level" class="oe_inline"/>
+                                        <field name="father_employment_place" class="oe_inline"/>
+                                        <field name="mother_employment_place" class="oe_inline"/>
+                                        <field name="father_work_tel_no" class="oe_inline" widget="phone"/>
+                                        <field name="mother_work_tel_no" class="oe_inline" widget="phone"/>
+                                        <field name="father_mobile_no" class="oe_inline" widget="phone"/>
+                                        <field name="mother_mobile_no" class="oe_inline" widget="phone"/>
+                                        <field name="father_email" class="oe_inline" widget="email"/>
+                                        <field name="mother_email" class="oe_inline" widget="email"/>
+                                        <field name="home_address"/>
+                                        <field name="home_tel_no" class="oe_inline" widget="phone"/>
+                                        <field name="classification1" class="oe_inline"/>
+                                        <field name="classification2" class="oe_inline"/>
+                                        <field name="is_registered_noor" class="oe_inline"/>
+                                        <field name="noor_registered_no" class="oe_inline"/>
+                                        <field name="maritual_status" class="oe_inline"
+                                               attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                               placeholder="Marital Status"/>
+                                    </group>
+                                </group>
+                                <newline/>
+                                <group string="Previous School" colspan="4" col="4">
+                                    <field name="previously_registered" class="oe_inline"/>
+                                    <field name="arabic_previous_school" class="oe_inline"/>
+                                    <field name="previously_school" class="oe_inline"/>
+                                    <field name="previously_class" class="oe_inline"/>
+                                </group>
+                                <newline/>
+                                <separator string="Emergency Contact Details" colspan="4"/>
+                                <newline/>
+                                <group colspan="4" col="4">
+                                    <field name="contact_phone1"
+                                           attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                           placeholder="Phone Number"/>
+                                    <field name="contact_mobile1"
+                                           attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                           placeholder="Mobile Number"/>
+                                </group>
+                                <newline/>
+                            </group>
+                            <newline/>
+                            <separator string="Termination Reason"
+                                       attrs="{'invisible':[('state','in',['draft','done','alumni'])]}"/>
+                            <group>
+                                <field name="terminate_reason"
+                                       attrs="{'invisible':[('state','in',['draft','done','alumni'])]}" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Parents">
+                            <field name="parent_id"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                   context="{'form_view_ref':'view_parent_form','default_parent_school':1}"
+                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                        </page>
+                        <!-- <page string="References">
+                            <field name="reference_ids" nolabel="1" colspan="4"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}">
+                                <tree string="Reference" editable="top">
+                                    <field name="name"/>
+                                    <field name="middle"/>
+                                    <field name="last"/>
+                                    <field name="designation"/>
+                                    <field name="phone"/>
+                                    <field name="gender"/>
+                                </tree>
+                                <form string="Reference">
+                                    <group col="4" colspan="4">
+                                        <field name="name" placeholder="First Name"/>
+                                        <field name="gender"/>
+                                        <field name="middle" placeholder="Middle Name"/>
+                                        <field name="designation" placeholder="Designation"/>
+                                        <field name="last" placeholder="Last Name"/>
+                                        <field name="phone" placeholder="Phone Number"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Previous School" invisible="1">
+                            <field name="previous_school_ids" nolabel="1" colspan="4"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}">
+                                <tree string="Previous School Details">
+                                    <field name="name"/>
+                                    <field name="registration_no"/>
+                                    <field name="admission_date"/>
+                                    <field name="exit_date"/>
+                                    <field name="course_id" widget="selection"/>
+                                </tree>
+                                <form string="Previous School Details">
+                                    <separator string="Previous School Details"/>
+                                    <group col="4" colspan="4">
+                                        <field name="name" placeholder="School Name"/>
+                                        <field name="registration_no" placeholder="Registration No"/>
+                                        <field name="admission_date"/>
+                                        <field name="exit_date"/>
+                                        <field name="course_id" widget="selection"/>
+                                        <newline/>
+                                        <separator string="Subjects Details"/>
+                                        <field name="add_sub" nolabel="1" colspan="4"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Award Info">
+                            <field name="award_list" nolabel="1" colspan="4"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}">
+                                <tree string="Reference" editable="top">
+                                    <field name="name" required="1" placeholder="Name"/>
+                                    <field name="description" placeholder="Description"/>
+                                </tree>
+                                <form string="Reference">
+                                    <group col="4" colspan="4">
+                                        <field name="name" placeholder="Enter Name"/>
+                                        <field name="description" placeholder="Enter Description"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Family Info">
+                            <field name="family_con_ids" nolabel="1" colspan="4"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}">
+                                <form string="Family Contact Details">
+                                    <group>
+                                        <group>
+                                            <field name="rel_name"/>
+                                            <field name="stu_name" placeholder="Create or Select Name"
+                                                   attrs="{'invisible':[('rel_name','!=','exist')]}"
+                                                   options="{&quot;no_create&quot;: True}"/>
+                                            <field name="name" placeholder="Name"
+                                                   attrs="{'invisible':[('rel_name','!=','new')]}"/>
+                                            <field name="relation" placeholder="Enter or select Relation"/>
+                                        </group>
+                                        <group>
+                                            <field name="phone" placeholder="Phone Number"/>
+                                            <field name="email" placeholder="Email ID"/>
+                                        </group>
+                                    </group>
+                                </form>
+                                <tree string="Family Contact Details">
+                                    <field name="relative_name"/>
+                                    <field name="relation"/>
+                                    <field name="phone"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Medical">
+                            <group>
+                                <group string="Family Doctor Information">
+                                    <field name="doctor"/>
+                                    <field name="doctor_mobile1" widget="phone"/>
+                                    <field name="doctor_mobile2" widget="phone"/>
+                                    <field name="doc_description"/>
+                                    <field name="medical_img"/>
+                                    <field name="designation" placeholder="Doctor Designation"
+                                           attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                    <field name="doctor_phone" placeholder="Doctor's Contact No"
+                                           attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                </group>
+                                <group>
+                                    <p>Without written permission from parent. The school must know the amount, times
+                                        and the duration of the medicine to be administered.
+                                    </p>
+                                    <label for="tylenol_panadol"/>
+                                    <field name="tylenol_panadol" class="oe_inline"/>
+                                    <label for="wear_glasses"/>
+                                    <field name="wear_glasses" class="oe_inline"/>
+                                    <label for="eye_examined"/>
+                                    <field name="eye_examined" class="oe_inline"/>
+                                    <label for="eye_examined_date" attrs="{'invisible':[('eye_examined','!=',True)]}"/>
+                                    <field name="eye_examined_date" class="oe_inline"
+                                           attrs="{'invisible':[('eye_examined','!=',True)]}"/>
+                                    <label for="hearing_aid"/>
+                                    <field name="hearing_aid" class="oe_inline"/>
+                                    <label for="speech_problem"/>
+                                    <field name="speech_problem" class="oe_inline"/>
+                                    <label for="previous_therapy"/>
+                                    <field name="previous_therapy" class="oe_inline"/>
+                                    <label for="previous_therapy_specify"/>
+                                    <field name="previous_therapy_specify" class="oe_inline"/>
+                                    <separator string="Past Chilhood Diseases"/>
+                                    <group col="4" colspan="4">
+                                        <field name="chicken_pox"/>
+                                        <field name="measles"/>
+                                        <field name="german_measles"/>
+                                        <field name="mumps"/>
+                                    </group>
+                                    <label for="other"/>
+                                    <field name="other" class="oe_inline"/>
+                                    <label for="other_name" attrs="{'invisible':[('other','!=',True)]}"/>
+                                    <field name="other_name" class="oe_inline"
+                                           attrs="{'invisible':[('other','!=',True)]}"/>
+                                    <label for="blood_group"/>
+                                    <field name="blood_group" class="oe_inline" placeholder="e.g.B+,Ab+"
+                                           attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                    <label for="height"/>
+                                    <field name="height" class="oe_inline"
+                                           attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                           placeholder="Height"/>
+                                    <label for="weight"/>
+                                    <field name="weight" class="oe_inline"
+                                           attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                           placeholder="Weight"/>
+                                </group>
+                            </group>
+                            <separator string="Does the applicant have any Disabilities?" colspan="4"/>
+                            <group col="6" colspan="4">
+                                <field name="eye" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="ear" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="nose_throat" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="respiratory" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="cardiovascular"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="neurological"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="muskoskeletal"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="dermatological"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="blood_pressure"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="asthma" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="diabetes" attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                                <field name="heart_problem"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            </group>
+                            <group>
+                                <field name="list_medication" class="oe_inline"/>
+                            </group>
+                            <separator string="Notes" colspan="4"/>
+                            <group col="6" colspan="4">
+                                <field name="comment" placeholder="Notes About Medical.." nolabel="1"
+                                       attrs="{'readonly':[('state','in',['alumni','terminate'])]}"/>
+                            </group>
+                        </page>
+                        <page string="Certificates">
+                            <field name="certificate_ids" nolabel="1" colspan="4"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}">
+                                <form string="Certificate">
+                                    <group col="4">
+                                        <field name="description" placeholder="Description About Certificate"/>
+                                        <field name="certi"/>
+                                    </group>
+                                </form>
+                                <tree string="Certifaicate" editable="top">
+                                    <field name="description" required="1" placeholder="Enter Description"/>
+                                    <field name="certi" required="1" placeholder="Upload Certi"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Remarks">
+                            <field name="description" nolabel="1" colspan="4"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}">
+                                <form string="Extra Details">
+                                    <group col="4" colspan="2">
+                                        <field name="name" placeholder="Field Name"/>
+                                        <field name="description" placeholder="Description"/>
+                                    </group>
+                                </form>
+                                <tree string="Remarks" editable="top">
+                                    <field name="name" required="1" placeholder="Enter Name"/>
+                                    <field name="description" placeholder="Enter Description"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="History" groups="group_school_administration,group_school_teacher,group_school_parent,group_school_student">
+                            <field name="history_ids" nolabel="1" colspan="4" readonly="1"
+                                   attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
+                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}">
+                                <tree string="History">
+                                    <field name="academice_year_id" required="1"/>
+                                    <field name="standard_id" required="1"/>
+                                    <field name="percentage"/>
+                                    <field name="result"/>
+                                </tree>
+                                <form string="History">
+                                    <group col="4" colspan="4">
+                                        <field name="academice_year_id" placeholder="Acadamic Year"/>
+                                        <field name="standard_id" placeholder="Select or Create Standard"/>
+                                        <field name="percentage"/>
+                                        <field name="result"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Notification">
+                            <field name="notification_ids">
+                                <tree create='1' editable='bottom'>
+                                    <field name="study_year_id"/>
+                                    <field name="description1"/>
+                                    <field name="description2"/>
+                                    <field name="status"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Offence">
+                            <field name="offence_ids">
+                                <tree create='1' editable='bottom'>
+                                    <field name="subject_ids" widget="many2many_tags"/>
+                                    <field name="date"/>
+                                    <field name="offence_type"/>
+                                    <field name="teacher_id"/>
+                                    <field name="study_year_id"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Study History">
+                            <field name="study_history_ids">
+                                <tree create='1' editable='bottom'>
+                                    <field name="study_year_id"/>
+                                    <field name="class_id"/>
+                                    <field name="division_id"/>
+                                    <field name="school_id"/>
+                                    <field name="region_id"/>
+                                    <field name="average_grade"/>
+                                    <field name="result"/>
+                                    <field name="note"/>
+                                    <field name="status"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Academic Performance">
+                            <field name="academic_per_ids">
+                                <tree create='1' editable='bottom'>
+                                    <field name="date"/>
+                                    <field name="teacher_id"/>
+                                    <field name="strength"/>
+                                    <field name="study_year_id"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Student Attendance">
+                            <field name="attendance_ids">
+                                <tree create='1' editable='bottom'>
+                                    <field name="study_year_id"/>
+                                    <field name="date"/>
+                                    <field name="day_name"/>
+                                    <field name="hour"/>
+                                    <field name="absent_type"/>
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Other">
+                            <group>
+                                <group>
+                                    <separator string="Mother Info"/>
+                                    <field name="mother_name_english"/>
+                                    <field name="mother_name_arabic"/>
+                                    <field name="mother_passport"/>
+                                    <field name="mother_nationality"/>
+                                    <field name="mother_mobile" widget="phone"/>
+                                    <field name="mother_email" widget="email" context="{'gravatar_image': True}"/>
+                                    <field name="mother_job_description"/>
+
+                                    <separator string="Home Address"/>
+                                    <field name="home_country_id"/>
+                                    <field name="home_city"/>
+                                    <field name="home_state_id"/>
+                                    <field name="home_street"/>
+                                    <field name="home_building_no"/>
+                                    <field name="zip"/>
+                                    <field name="coordinates"/>
+
+                                </group>
+                                <group>
+                                    <separator string="Emergency Info"/>
+                                    <field name="emergency_name"/>
+                                    <field name="emergency_relationship"/>
+                                    <field name="emergency_contact1" widget="phone"/>
+                                    <field name="emergency_contact2" widget="phone"/>
+
+                                    <separator string="Student State"/>
+                                    <field name="student_state"/>
+                                    <field name="student_state_date"/>
+                                    <field name="last_year_record_state"/>
+                                    <field name="current_record_state"/>
+                                    <field name="transfer_school"/>
+                                    <field name="transfer_date"/>
+                                    <field name="last_result"/>
+
+                                    <separator string="Information of join to school"/>
+                                    <field name="adopt_policy"/>
+                                    <field name="join_study_year"/>
+                                    <field name="join_class"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Registration">
+                            <group>
+                                <group>
+                                    <separator string="Waiting For Student Entry"/>
+                                    <field name="copies_of_child_id"/>
+                                    <field name="complete_application_form"/>
+                                    <field name="place_and_date_boolean"/>
+                                    <field name="place_and_date_char"/>
+                                    <field name="expiry_date_boolean"/>
+                                    <field name="expiry_date_char"/>
+                                    <field name="valid_residence_boolean"/>
+                                    <field name="copies_of_child_birth"/>
+                                    <field name="passport_size_photo"/>
+                                    <field name="health_form"/>
+                                    <field name="tranfer_latter"/>
+                                    <field name="expiry_residence_char"/>
+                                    <field name="photo_to_deputy"/>
+                                    <field name="stamped_signed_by_school"/>
+                                    <field name="authenticated_by_local_education_authority"/>
+                                    <field name="awaiting"/>
+                                </group>
+                                <group>
+                                    <separator string="Curriculum"/>
+                                    <field name="curriculum"/>
+                                    <field name="curr_school_name"/>
+                                    <field name="curr_educational_regions"/>
+                                    <field name="curr_last_result"/>
+                                    <field name="curr_detail"/>
+                                    <field name="family_members"/>
+                                    <field name="student_order"/>
+                                    <field name="health_status"/>
+                                    <field name="cause_of_leakage"/>
+                                    <field name="type_of_help"/>
+                                    <field name="family_income"/>
+                                    <field name="receipt_card_relief"/>
+                                    <field name="social_status"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="SMS">
+                            <group>
+                                <separator string="New Sending SMS"/>
+                                <field name="sms_mobile1" widget="phone"/>
+                                <field name="sms_mobile2" widget="phone"/>
+                            </group>
+                            <field name="sms_text"/>
+                            <separator string="Messages sent"/>
+                            <field name="sent_msg_ids">
+                                <tree create='1' editable='bottom'>
+                                    <field name="date"/>
+                                    <field name="sms_text"/>
+                                    <field name="mobile"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Immunization Info">
+                            <group>
+                                <separator string="Date of last vaccination for"/>
+                                <field name="tetanus"/>
+                                <field name="dephtheria"/>
+                                <field name="polio"/>
+                                <field name="mmr"/>
+                                <separator string="If your child has asthma"/>
+                                <separator/>
+                                <p>Each year, there are several potentially serious incident with children who has
+                                    asthma, strongly encourage you to send an extra inhaler or medicine to school to
+                                    kept in the school office, please be sure to label in with the student's name and
+                                    instruction for use.
+                                </p>
+                                <field name="name_medication"/>
+                                <field name="dose"/>
+                                <field name="medicine_for_school"/>
+                                <field name="medicine_carry_child"/>
+                            </group>
+                            <separator string="Other"/>
+                            <label for="medicine_notes"/>
+                            <field name="medicine_notes"/>
+                        </page>
+
+                        <page string="Applicable Fee">
+                            <group string="Applicable Fee">
+                                <field name="fee_structure_id" class="oe_inline"/>
+                            </group>
+                            <field name="line_ids">
+                                <tree>
+                                    <field name="sequence"/>
+                                    <field name="name"/>
+                                    <field name="classes"/>
+                                    <field name="code"/>
+                                    <field name="type"/>
+                                    <field name="account_id"/>
+                                    <field name="discount_ids" widget="many2many_tags"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Payment History">
+                            <field name="payment_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="total_amount" sum="Total"/>
+                                    <field name="current_due_amount" sum="Total"/>
+                                    <field name="paid_amount" sum="Total"/>
+                                    <field name="paying_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+ -->
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Tree View 1 Of Student's Profiles -->
+    <record id="view_student_tree_info" model="ir.ui.view">
+        <field name="name">student.student.tree.info</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <tree string="Student Information" create="false" delete="false">
+                <field name="pid"/>
+                <field name="name"/>
+                <field name="father_email"/>
+                <field name="standard_id"/>
+                <field name="student_passport_no"/>
+                <field name="contact_phone1"/>
+                <field name="contact_mobile1"/>
+                <field name="student_name" invisible="1"/>
+                <field name="year" widget="selection"/>
+                <!--<field name="admission_date" />-->
+                <field name="gender"/>
+                <field name="state"/>
+                <field name="school_id"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Kanban View Of Student's Profiles -->
+     <record id="student_student_kanban_view" model="ir.ui.view">
+        <field name="name">Student KANBAN</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="standard_id" nocreate="1" create="false">
+                <field name="color"/>
+                <field name="id"/>
+                <field name="name"/>
+                <field name="email"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <t t-set="color" t-value="kanban_color(record.color.raw_value || record.name.raw_value)" />
+                        <div t-att-class="color + (record.color.raw_value == 1 ? ' oe_kanban_color_alert' : '')">
+                            <div class="oe_kanban_box oe_kanban_color_border">
+                                <div class="oe_kanban_box_header oe_kanban_color_bgdark oe_kanban_color_border oe_kanban_draghandle">
+                                    <table class="oe_kanban_table">
+                                        <tr>
+                                            <td class="oe_kanban_title1" align="left" valign="middle" style="padding-left:10px;">
+                                                <h4>
+                                                    <a type="open">
+                                                        <field name="name" />
+                                                        <field name="middle" />
+                                                        <field name="last" />
+                                                        <field name="student_name" invisible="1" />
+                                                        <field name="standard_id" invisible="1" />
+                                                        <field name="school_id" invisible="1" />
+                                                        <field name="gender" invisible="1" />
+                                                        <field name="state" invisible="1" />
+                                                    </a>
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="oe_kanban_box_content oe_kanban_color_bglight oe_kanban_box_show_onclick_trigger oe_kanban_color_border">
+                                    <table class="oe_kanban_table">
+                                        <tr width="300">
+                                            <td valign="top" width="64" align="left">
+                                                <a type="open">
+                                                    <img heigh="80" width="80" t-att-src="kanban_image('student.student', 'photo', record.id.raw_value)" alt="image"/>
+                                                </a>
+                                            </td>
+                                            <td valign="top" align="left" style="padding-left:10px;">
+                                                <table>
+                                                    <tr>
+                                                        <td>Student ID :</td>
+                                                        <td style="padding-left:10px;">
+                                                            <b>
+                                                                <field name="pid" />
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Standard : </td>
+                                                        <td style="padding-left:10px;">
+                                                            <b>
+                                                                <field name="standard_id" />
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Admission Date : </td>
+                                                        <td style="padding-left:10px;">
+                                                            <b>
+                                                                <field name="admission_date" />
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <center>
+                                                    <b>
+                                                        <field name="gender" />
+                                                    </b>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="oe_kanban_buttons_set oe_kanban_color_border oe_kanban_color_bglight oe_kanban_box_show_onclick">
+                                    <div class="oe_kanban_left">
+                                        <a role="button" string="Edit" class="btn btn-sm btn-default fa fa-pencil" type="edit" groups="uae_ems.group_school_administration"/>
+                                        <a role="button" string="Change Color" icon="color-picker" type="color" name="color" />
+                                    </div>
+                                    <br class="oe_kanban_clear" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!-- Action Of Form, Tree & Kanban Views Of Student Information -->
+    <record id="action_student_profile" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="domain">[('state', '=', 'done')]</field>
+        <field name="context">{'search_default_done_student':1}</field>
+        <field name="res_model">student.student</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref=""/>
+        <!-- <field name="search_view_id" ref="view_student_search_1"/> -->
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <!-- Action View 1 Of Kanban View Of Student Information-->
+   <!--  <record id="action_view_student_kanban_info" model="ir.actions.act_window.view">
+        <field name="view_mode">kanban</field>
+        <field eval="31" name="sequence"/>
+        <field name="view_id" ref="student_kanban_view"/>
+        <field name="act_window_id" ref="action_student_profile"/>
+    </record> -->
+</odoo>

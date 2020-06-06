@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="school_parent_form_view" model="ir.ui.view">
+        <field name="name">school.parent.form</field>
+        <field name="model">school.parent</field>
+        <field name="arch" type="xml">
+        	<form string="Parents Details">
+                <field name="image" widget="image" class="oe_avatar"
+                               options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+                <div class="oe_title">
+
+                    <h1>
+                        <field name="name" default_focus="1" placeholder="Name"/>
+                    </h1>
+                </div>
+        	<group>
+        		<group>
+                    <field name="son_of_employee"/>
+                    <field name="is_black_list"/>
+                    <field name="employee_id"/>
+                    <field name="guardian_id_number"/>
+                    <field name="guardian_id_issued_place"/>
+                    <field name="guardian_id_expiry_date"/>
+                    <field name="guardian_arabic_name"/>
+                    <field name="guardian_relationship_student"/>
+                    
+        		</group>
+        		<group>
+                    <field name="guardian_passport_no"/>
+                    <field name="guardian_passport_issued_place"/>
+                    <field name="guardian_passport_expiry_date"/>
+                    <field name="guardian_address"/>
+                    <field name="guardian_work_address"/> 
+        			<field name="guardian_home_tel"/>
+        			<field name="guardian_mobile1"/>
+        			<field name="guardian_mobile2"/>
+                    <field name="guardian_email"/>
+        			<field name="guardian_work"/>
+           			<field name="guardian_document"/>	
+        		</group>
+            </group>
+    	</form>
+        </field>
+        </record>
+
+	<record id="school_parent_tree_view" model="ir.ui.view">
+        <field name="name">school.parent.tree</field>
+        <field name="model">school.parent</field>
+        <field name="arch" type="xml">
+            <tree string="Parents Details">
+                <field name="name"/>
+                <field name="guardian_passport_no"/>
+                <field name="guardian_mobile1"/>
+                <field name="guardian_mobile2"/>
+                <field name="guardian_relationship_student"/>
+                <field name="phone"/>
+                <field name="guardian_email"/>
+                <field name="guardian_nationality"/>
+            	    
+            </tree>
+        </field>
+    </record>
+    <record id="school_parent_search_view" model="ir.ui.view">
+        <field name="name">school.parent.search</field>
+        <field name="model">school.parent</field>
+        <field name="arch" type="xml">
+            <search string="News">
+                <field name="name"/>
+                <field name="guardian_passport_no"/>
+                <field name="guardian_mobile1"/>
+                <field name="guardian_mobile2"/>
+            </search>
+        </field>
+    </record>
+	<record id="action_school_parent" model="ir.actions.act_window">
+        <field name="name">Parent</field>
+        <field name="res_model">school.parent</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

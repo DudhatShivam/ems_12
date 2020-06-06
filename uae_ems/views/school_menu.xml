@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	 	<menuitem id="menu_ems" name="REMS"  sequence="1"/>
+
+	 	<menuitem id="admission_register" name="Admission Register" parent="menu_ems" sequence="1"/>
+            <menuitem 
+              	id="menu__student_admission" 
+              	name="Admission Register" 
+              	parent="admission_register"
+              	action="action_student_admission" 
+              	sequence="1"/>
+
+            <!-- Menuitem of alumni and terminate -->
+    		<!-- <menuitem 
+    			id="menu_student_alumni" 
+    			name="Alumni/Terminate" 
+    			action="action_student_alumni"
+              	parent="admission_register"
+              	sequence="2"/> -->
+
+
+	 	<!-- profile main menu -->
+	 	<menuitem id="menu_school_profiles" name="Profiles" parent="menu_ems" sequence="2"/>
+		<!-- profile submenu -->
+			<menuitem 
+				id="menu_student_profile" 
+				name="Students" 
+				parent="menu_school_profiles" 
+				sequence="1" 
+				action="action_student_profile"/>
+				<!-- action_student_student_form_12 -->
+
+			<menuitem 
+				id="menu_parents" 
+				name="Parents" 
+				parent="menu_school_profiles" 
+				sequence="3" 
+				action="action_school_parent"/>
+
+		<!-- configuration -->
+		<menuitem id="menu_configuration" name="Configurations" sequence="2"/>
+			<!--for academic configuration-->
+			<menuitem id="menu_acadamic_year" name="Acadamic years" parent="menu_configuration" sequence="3"/>
+			<menuitem 
+				id="menu_year" 
+				name="Years" 
+				parent="menu_acadamic_year" 
+				sequence="1" 
+				action="action_academic_year"/>
+
+		  	<menuitem 
+		  		id="menu_month" 
+		  		name="Month" 
+		  		parent="menu_acadamic_year" 
+		  		sequence="2" 
+		  		action="action_academic_month"/>
+		  
+			<!-- for school configuration -->
+			<menuitem id="menu_school_configuration" name="School configuration" parent="menu_configuration" sequence="1"/>
+				<menuitem 
+					id="menu_religion" 
+					name="Religion/cast" 
+					parent="menu_school_configuration" 
+					sequence="1"/>
+			  
+			  	<menuitem 
+			  		id="menu_document_type" 
+			  		name="Document Type" 
+			  		parent="menu_school_configuration" 
+			  		sequence="2"/>
+			  
+			  	<menuitem 
+			  		id="menu_grade" 
+			  		name="Grade" 
+			  		parent="menu_school_configuration" 
+			  		sequence="3" 
+			  		action="action_grade_master"/>
+			  
+			  	<menuitem 
+			  		id="menu_notice_board" 
+			  		name="Noticeboard" 
+			  		parent="menu_school_configuration" 
+			  		sequence="4"/>
+			  
+			  	<menuitem 
+			  		id="menu_mother_tongue" 
+			  		name="Mother Tongue" 
+			  		parent="menu_school_configuration" 
+			  		sequence="5"/>
+			  
+			  	<menuitem 
+			  		id="menu_school" 
+			  		name="School" 
+			  		parent="menu_school_configuration" 
+			  		sequence="6" 
+			  		action="action_school_school"/>
+			  
+			<!-- standard configguration -->
+			<menuitem id="menu_school_standards" name="Standards" parent="menu_configuration" sequence="4"/>
+			  	<menuitem 
+			  		id="menu_school_classes" 
+			  		name="Classes" 
+			  		parent="menu_school_standards" 
+			  		sequence="1" 
+			  		action="action_school_standard"/>
+
+		  		<menuitem 
+		  			id="menu_standard_standard" 
+		  			name="Standard" 
+		  			parent="menu_school_standards" 
+		  			sequence="2" 
+		  			action="action_standard_standard"/>
+
+		  		<menuitem 
+		  			id="menu_standard_division" 
+		  			name="Division" 
+		  			parent="menu_school_standards" 
+		  			sequence="3" 
+		  			action="action_standard_division"/>
+
+		  		<menuitem 
+		  			id="menu_standard_medium" 
+		  			name="Medium" 
+		  			parent="menu_school_standards"
+	              	action="action_standard_medium"
+	              	sequence="4" />
+
+        	<!-- MenuItem For Configurations Subject -->
+    		<menuitem id="menu_school_subject" name="Subjects" parent="menu_configuration" sequence="10"/>
+			    <menuitem 
+			    	id="menu_subject_subject" 
+			    	name="Subjects" 
+			    	parent="menu_school_subject"
+			    	sequence="1" 
+			        action="action_subject_subject"/>
+
+			    <menuitem 
+			    	id="menu_subject_elective" 
+			    	name="Elective Subject(s)" 
+			    	parent="menu_school_subject"
+			    	sequence="2" 
+			        action="action_elective_subject"/>
+
+			<!-- Menu Item for Configuration fees -->
+			<menuitem id="menu_school_fees_structure" name="Fees" parent="menu_configuration" sequence="11"/>
+    			<menuitem 
+    				id="menu_student_fees_structure_line" 
+    				name="Fees Structure" 
+    				parent="menu_school_fees_structure"
+    				sequence="1"
+              		action="action_student_fees_structure_line"/>
+    			
+    			<menuitem 
+    				id="menu_student_fees_structure" 
+    				name="Fees Head" 
+    				parent="menu_school_fees_structure"
+              		action="action_student_fees_structure"
+              		sequence="2"/>
+
+			<!-- Menu Item for Discount -->
+			<menuitem id="main_menu_ems_discount" name="Discounts" parent="menu_configuration" />
+				<menuitem 
+					id="menu_fees_discount" 
+					name="Discounts" 
+					parent="main_menu_ems_discount" 
+					action="action_fees_discount" />
+	
+	
+
+</odoo>

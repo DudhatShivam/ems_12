@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <!-- Form View Of Student PaySlip Line Information -->
+    <record id="student_fees_structure_line_view_form" model="ir.ui.view">
+        <field name="name">student.fees.structure.line.form</field>
+        <field name="model">student.fees.structure.line</field>
+        <field name="arch" type="xml">
+            <form string="Student Payslip Line">
+                <group col="4">
+                    <field name="name"/>
+                    <field name="arabic_name"/>
+                    <field name="code"/>
+                    <field name="classes"/>
+                </group>
+                <group col="4" string="Calculations">
+                    <field name="type"/>
+                    <field name="amount"/>
+                    <field name="account_id" required="1"/>
+                    <field name="company_id"/>
+                    <field name="currency_id"/>
+                    <field name="currency_symbol"/>
+                    <field name="academic_year"/>
+                    <field name="duration"/>
+                </group>
+                <notebook colspan="4">
+                    <page string="Function">
+                        <!-- <field name="line_ids" colspan="4" nolabel="1" attrs="{'readonly':[('type','!=','range')]}">
+                            <tree string="Function Arguments">
+                                <field name="from_month"/>
+                                <field name="to_month"/>
+                            </tree>
+                            <form string="Function Arguments">
+                                <field name="sequence"/>
+                                <field name="from_month"/>
+                                <field name="to_month"/>
+                            </form>
+                        </field> -->
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+    <!-- Tree View Of Student PaySlip Line Information -->
+    <record id="student_fees_structure_line_view_tree" model="ir.ui.view">
+        <field name="name">student.fees.structure.line.tree</field>
+        <field name="model">student.fees.structure.line</field>
+        <field name="arch" type="xml">
+            <tree string="Fees Structure">
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="classes"/>
+                <field name="code"/>
+                <field name="type"/>
+                <field name="account_id"/>
+                <field name="amount"/>
+            </tree>
+        </field>
+    </record>
+
+     <!-- Action Of Form & Tree Views Of Student PaySlip Line Information -->
+    <record id="action_student_fees_structure_line" model="ir.actions.act_window">
+        <field name="name">Fees Head</field>
+        <field name="res_model">student.fees.structure.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Form View Of Student Fees Structure Information -->
+    <record id="student_fees_structure_view_form" model="ir.ui.view">
+        <field name="name">student.fees.structure.form</field>
+        <field name="model">student.fees.structure</field>
+        <field name="arch" type="xml">
+            <form string="Student Fees Structure">
+                <sheet>
+                    <group >
+                        <field name="name" placeholder="Name"/>
+                        <field name="code" placeholder="Code"/>
+                    </group>
+                    <group>
+                        <field name="classes" placeholder="Class"/>
+                        <field name="academic_year" placeholder="Academic Year"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Fees Structure">
+                            <field name="structure_line_ids">
+                                <tree editable="bottom">
+                                    <field name="structre_line_id"/>
+                                    <field name="code"/>
+                                    <field name="account_id"/>
+                                    <field name="academic_year"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Tree View Of Student Fees Structure Information -->
+    <record id="student_fees_structre_view_tree" model="ir.ui.view">
+        <field name="name">student.fees.structure.tree</field>
+        <field name="model">student.fees.structure</field>
+        <field name="arch" type="xml">
+            <tree string="Student Fees Structure">
+                <field name="name"/>
+                <field name="classes"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action Of Form & Tree Views Of Student Fees Structure Information -->
+    <record model="ir.actions.act_window" id="action_student_fees_structure">
+        <field name="name">Fees Structure</field>
+        <field name="res_model">student.fees.structure</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    
+    
+    <record id="ems_discount_form_view" model="ir.ui.view">
+        <field name="name">EMS Discount Form View</field>
+        <field name="model">ems.discount</field>
+        <field name="arch" type="xml">
+            <form string="EMS Discount Form View">
+               <sheet>
+                    <h1><field name="name"/></h1>
+                    <group>
+                        <group>
+                            <field name="arabic_name"/>
+                            <field name="description" />
+                            <field name="school_id"/>
+                            <field name="acadamic_year_id"/>
+                            <field name="branch_id"/>
+                        </group>
+                        <group>
+                            <field name="account_id"/>
+                            <field name="discount_type"/>
+                            <field name="amount" attrs="{'required':[('discount_type', '!=', 'percentage')]}"/>
+                            <field name="amount_per" attrs="{'required':[('discount_type', '!=', 'fix')]}"/>
+                            <field name="brother_dic_for_bro"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ems_discount_tree_view" model="ir.ui.view">
+        <field name="name">EMS Discount Tree View</field>
+        <field name="model">ems.discount</field>
+        <field name="arch" type="xml">
+            <tree string="Create EMS Discount">
+                <field name="name"/>
+                <field name="arabic_name"/>
+                <field name="school_id"/>
+                <field name="acadamic_year_id"/>
+                <field name="branch_id"/>
+                <field name="amount" />
+                <field name="account_id" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Action Of Form & Tree Views Of Discount Information -->
+    <record model="ir.actions.act_window" id="action_fees_discount">
+        <field name="name">Discount</field>
+        <field name="res_model">ems.discount</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" eval="ems_discount_tree_view" />
+    </record>
+    
+</odoo>
