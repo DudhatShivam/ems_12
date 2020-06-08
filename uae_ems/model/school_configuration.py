@@ -121,9 +121,9 @@ class SchoolStandard(models.Model):
     name = fields.Char(string='Class Name')
     code = fields.Char(string='code')
     school_id = fields.Many2one('school.school', 'School', required=True)
-    standard_id = fields.Many2one('standard.standard', 'Standard',
+    standard_id = fields.Many2one('standard.standard', 'Class',
                                   required=True)
-    division_id = fields.Many2one('standard.division', 'Division',
+    division_id = fields.Many2one('standard.division', 'Section',
                                   required=True)
     medium_id = fields.Many2one('standard.medium', 'Medium', required=True)
     subject_ids = fields.Many2many('subject.subject', 'subject_standards_rel',
@@ -188,7 +188,7 @@ class SchoolStandard(models.Model):
 class StandardStandard(models.Model):
     ''' Defining Standard Information '''
     _name = 'standard.standard'
-    _description = 'Standard Information'
+    _description = 'Class Information'
     _order = "sequence"
 
     sequence = fields.Integer('Sequence', required=True)
@@ -209,7 +209,7 @@ class StandardStandard(models.Model):
 class StandardDivision(models.Model):
     ''' Defining a division(A, B, C) related to standard'''
     _name = "standard.division"
-    _description = "Standard Division"
+    _description = "Standard Section"
     _order = "sequence"
 
     sequence = fields.Integer('Sequence', required=True)
@@ -242,7 +242,7 @@ class SubjectSubject(models.Model):
     weightage = fields.Integer("WeightAge")
     # teacher_ids = fields.Many2many('school.teacher', 'subject_teacher_rel', 'subject_id', 'teacher_id', 'Teachers')
     standard_ids = fields.Many2many('standard.standard',
-                                    string='Standards')
+                                    string='Class')
     standard_id = fields.Many2one('standard.standard', 'Class')
     is_practical = fields.Boolean('Is Practical',
                                   help='Check this if subject is practical.')

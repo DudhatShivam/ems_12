@@ -190,7 +190,7 @@
     </record>
      <!-- Action Of Form & Tree Views Of Standard Information -->
     <record id="action_standard_standard" model="ir.actions.act_window">
-        <field name="name">Standards</field>
+        <field name="name">Class</field>
         <field name="res_model">standard.standard</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
@@ -229,7 +229,7 @@
 
     <!-- Action Of Form & Tree Views Of Standard Division Information Action -->
     <record id="action_standard_division" model="ir.actions.act_window">
-        <field name="name">Divisions</field>
+        <field name="name">Section</field>
         <field name="res_model">standard.division</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>

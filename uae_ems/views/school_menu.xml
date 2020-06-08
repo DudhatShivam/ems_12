@@ -107,14 +107,14 @@
 
 		  		<menuitem 
 		  			id="menu_standard_standard" 
-		  			name="Standard" 
+		  			name="Class" 
 		  			parent="menu_school_standards" 
 		  			sequence="2" 
 		  			action="action_standard_standard"/>
 
 		  		<menuitem 
 		  			id="menu_standard_division" 
-		  			name="Division" 
+		  			name="Section" 
 		  			parent="menu_school_standards" 
 		  			sequence="3" 
 		  			action="action_standard_division"/>
